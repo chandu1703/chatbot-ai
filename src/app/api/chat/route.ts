@@ -7,6 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     // Log environment check
     console.log("GROQ_API_KEY exists:", !!process.env.GROQ_API_KEY);
+    console.log("GROQ_API_KEY length:", process.env.GROQ_API_KEY?.length || 0);
 
     const { messages } = await req.json();
 
@@ -15,8 +16,14 @@ export async function POST(req: NextRequest) {
     }
 
     if (!process.env.GROQ_API_KEY) {
-      console.error("GROQ_API_KEY is not set");
-      return new Response("API key not configured", { status: 500 });
+      console.error("GROQ_API_KEY is not set in environment");
+      return new Response(JSON.stringify({
+        error: "API key not configured",
+        reply: "Sorry, the chat service is not properly configured. Please contact support."
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const groq = new Groq({
@@ -38,6 +45,7 @@ export async function POST(req: NextRequest) {
 
   } catch (error: any) {
     console.error("API ERROR:", error);
+    console.error("Error details:", error.message);
 
     return new Response(
       JSON.stringify({

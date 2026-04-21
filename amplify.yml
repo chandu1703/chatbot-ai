@@ -4,8 +4,12 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        - echo "Setting up environment variables..."
+        - export GROQ_API_KEY=$GROQ_API_KEY
+        - echo "GROQ_API_KEY is set: $(if [ -n "$GROQ_API_KEY" ]; then echo 'YES'; else echo 'NO'; fi)"
     build:
       commands:
+        - echo "Building with GROQ_API_KEY: $(if [ -n "$GROQ_API_KEY" ]; then echo 'SET'; else echo 'NOT SET'; fi)"
         - npm run build
   artifacts:
     baseDirectory: .next
