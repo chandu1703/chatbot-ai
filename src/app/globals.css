@@ -99,14 +99,50 @@ body { background: linear-gradient(135deg, var(--bg-page-from) 0%, var(--bg-page
   to   { transform: translateX(200%); }
 }
 
+@keyframes message-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes message-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes typing-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
 /* ─── Utility classes ───────────────────────────────────── */
 
 .animate-float      { animation: float 5s ease-in-out infinite; }
+.animate-float-gentle { animation: float-gentle 4s ease-in-out infinite; }
 .animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
 .animate-slide-up   { animation: slide-up 0.32s cubic-bezier(0.34,1.56,0.64,1) both; }
 .animate-fade-in    { animation: fade-in 0.22s ease-out both; }
 .animate-glow       { animation: glow-pulse 2.5s ease-in-out infinite; }
 .animate-cursor     { animation: cursor-blink 1s step-end infinite; }
+.animate-message-left { animation: message-slide-in 0.4s ease-out both; }
+.animate-message-right { animation: message-slide-in-right 0.4s ease-out both; }
+.animate-typing-pulse { animation: typing-pulse 1.5s ease-in-out infinite; }
 
 .dot1 { animation: dot-bounce 1.3s ease-in-out infinite; }
 .dot2 { animation: dot-bounce 1.3s ease-in-out 0.18s infinite; }
