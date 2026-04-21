@@ -1,0 +1,164 @@
+﻿@import "tailwindcss";
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+
+/* ─── Theme CSS Variables ───────────────────────────────── */
+
+:root, [data-theme="light"] {
+  --bg-page-from: #e8eeff;
+  --bg-page-mid:  #f0edff;
+  --bg-page-to:   #e8f0ff;
+  --bg-chat:      #ffffff;
+  --bg-msg-ai:    #f1f5f9;
+  --bg-input:     #f8fafc;
+  --bg-fab:       linear-gradient(135deg, #6366f1, #8b5cf6);
+  --text-primary:   #1e293b;
+  --text-secondary: #64748b;
+  --text-placeholder: #94a3b8;
+  --border:       #e2e8f0;
+  --border-chat:  rgba(99,102,241,0.2);
+  --shadow-chat:  0 12px 48px rgba(99,102,241,0.14);
+  --scrollbar-thumb: rgba(99,102,241,0.35);
+  --toggle-bg:    #e2e8f0;
+  --toggle-icon:  #64748b;
+}
+
+[data-theme="dark"] {
+  --bg-page-from: #0d0a26;
+  --bg-page-mid:  #1a1040;
+  --bg-page-to:   #0d1b3e;
+  --bg-chat:      #111827;
+  --bg-msg-ai:    #1f2937;
+  --bg-input:     #1f2937;
+  --bg-fab:       linear-gradient(135deg, #6366f1, #8b5cf6);
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-placeholder: #6b7280;
+  --border:       #374151;
+  --border-chat:  rgba(99,102,241,0.25);
+  --shadow-chat:  0 24px 64px rgba(0,0,0,0.6);
+  --scrollbar-thumb: rgba(99,102,241,0.5);
+  --toggle-bg:    #374151;
+  --toggle-icon:  #a5b4fc;
+}
+
+body { background: linear-gradient(135deg, var(--bg-page-from) 0%, var(--bg-page-mid) 40%, var(--bg-page-to) 100%); color: var(--text-primary); transition: background 0.3s, color 0.3s; }
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(0deg); }
+  33%      { transform: translateY(-12px) rotate(1deg); }
+  66%      { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(160px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(160px) rotate(-360deg); }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99,102,241,0.6); }
+  70%  { transform: scale(1);    box-shadow: 0 0 0 16px rgba(99,102,241,0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(99,102,241,0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(32px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+@keyframes dot-bounce {
+  0%,80%,100% { transform: translateY(0);    opacity: 0.4; }
+  40%         { transform: translateY(-7px); opacity: 1; }
+}
+
+@keyframes cursor-blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0; }
+}
+
+@keyframes glow-pulse {
+  0%,100% { box-shadow: 0 0 20px rgba(99,102,241,0.4), 0 0 40px rgba(139,92,246,0.2); }
+  50%     { box-shadow: 0 0 30px rgba(99,102,241,0.7), 0 0 60px rgba(139,92,246,0.4); }
+}
+
+@keyframes header-shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* ─── Utility classes ───────────────────────────────────── */
+
+.animate-float      { animation: float 5s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
+.animate-slide-up   { animation: slide-up 0.32s cubic-bezier(0.34,1.56,0.64,1) both; }
+.animate-fade-in    { animation: fade-in 0.22s ease-out both; }
+.animate-glow       { animation: glow-pulse 2.5s ease-in-out infinite; }
+.animate-cursor     { animation: cursor-blink 1s step-end infinite; }
+
+.dot1 { animation: dot-bounce 1.3s ease-in-out infinite; }
+.dot2 { animation: dot-bounce 1.3s ease-in-out 0.18s infinite; }
+.dot3 { animation: dot-bounce 1.3s ease-in-out 0.36s infinite; }
+
+/* ─── Chat scrollbar ────────────────────────────────────── */
+.chat-body::-webkit-scrollbar       { width: 3px; }
+.chat-body::-webkit-scrollbar-track { background: transparent; }
+.chat-body::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 99px; }
+
+/* ─── Glass surface ─────────────────────────────────────── */
+.glass {
+  background: rgba(13,10,38,0.82);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+}
+
+/* ─── Gradient text ─────────────────────────────────────── */
+.grad-text {
+  background: linear-gradient(90deg, #a5b4fc, #c084fc, #67e8f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Send button shimmer ───────────────────────────────── */
+.send-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.send-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  background-size: 400px 100%;
+  animation: shimmer 2.4s linear infinite;
+}
+.send-btn:hover  { transform: scale(1.06); box-shadow: 0 0 24px rgba(99,102,241,0.6); }
+.send-btn:active { transform: scale(0.94); }
+.send-btn:disabled { opacity: 0.35; pointer-events: none; }
+
+/* ─── Header shimmer sweep ──────────────────────────────── */
+.header-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; width: 60px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  animation: header-shimmer 3s ease-in-out infinite;
+}
+
+/* ─── No focus outline ──────────────────────────────────── */
+button:focus, textarea:focus, input:focus { outline: none; }
